@@ -1,0 +1,16 @@
+📁 UPLOAD YOUR PDF FILES HERE
+
+For Category 1, you need to upload 2 files:
+
+1. category-1-view.pdf (PDF without watermark - for viewing online)
+2. category-1-download.pdf (PDF with watermark - for downloads)
+
+Steps:
+1. Copy your PDF files to this folder
+2. Rename them exactly as shown above
+3. Repeat for other categories (category-2-view.pdf, category-2-download.pdf, etc.)
+
+Current folder location:
+frontend/public/catalogues/
+
+The website will automatically load these PDFs when users visit the Catalogues page.
