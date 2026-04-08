@@ -268,8 +268,7 @@
 }
 
 .view-btn,
-.send-btn,
-.download-btn {
+.inquiry-btn {
   padding: 0.6rem 1rem;
   border-radius: 6px;
   font-weight: 600;
@@ -294,76 +293,34 @@
   background: #fff5f0;
 }
 
-.send-btn {
+.inquiry-btn {
   background: #4caf50;
   color: white;
   border: 2px solid #4caf50;
 }
 
-.send-btn:hover {
+.inquiry-btn:hover {
   background: #45a049;
 }
 
-.download-dropdown {
-  position: relative;
-}
-
-.download-btn,
-.download-all-btn {
-  background: #2196F3;
+.inquiry-all-btn {
+  background: #4caf50;
   color: white;
-  border: 2px solid #2196F3;
-  padding: 0.6rem 1rem;
+  border: 2px solid #4caf50;
+  padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
-.download-btn:hover,
-.download-all-btn:hover {
-  background: #1976D2;
-  border-color: #1976D2;
-}
-
-.download-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 0.25rem;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 10;
-  min-width: 150px;
-  overflow: hidden;
-}
-
-.download-menu button {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  background: white;
-  border: none;
-  text-align: left;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #333;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.download-menu button:hover {
-  background: #f8f9fa;
-  color: #2196F3;
-}
-
-.download-menu button:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+.inquiry-all-btn:hover {
+  background: #45a049;
+  border-color: #45a049;
 }
 
 /* Footer */
@@ -420,8 +377,7 @@
   }
 
   .view-btn,
-  .send-btn,
-  .download-btn {
+  .inquiry-btn {
     width: 100%;
     justify-content: center;
   }
@@ -432,7 +388,7 @@
     text-align: center;
   }
 
-  .download-all-btn {
+  .inquiry-all-btn {
     width: 100%;
   }
 }
@@ -461,8 +417,7 @@
   }
 
   .view-btn,
-  .send-btn,
-  .download-btn {
+  .inquiry-btn {
     width: 100%;
   }
 }

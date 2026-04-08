@@ -15,6 +15,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import UserLogin from './pages/UserLogin';
 import UserDashboard from './pages/UserDashboard';
+import QuotationPage from './pages/QuotationPage';
 
 function HomePage() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/user/login" element={<UserLogin />} />
           <Route path="/user/dashboard" element={<UserDashboard />} />
+          <Route path="/quotation" element={<QuotationPage />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>

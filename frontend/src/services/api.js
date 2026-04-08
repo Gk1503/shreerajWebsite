@@ -15,13 +15,13 @@ export const fetchCategories = async () => {
 
 export const fetchProducts = async (categoryId = null) => {
   try {
-    let url = `${API_URL}/products`;
+    let url = `${API_URL}/products?populate=category&populate=images&pagination[limit]=100`;
     if (categoryId) {
-      url += `?category=${categoryId}`;
+      url = `${API_URL}/products?filters[category][id][$eq]=${categoryId}&populate=category&populate=images&pagination[limit]=100`;
     }
     const response = await fetch(url);
     const data = await response.json();
-    return data.data;
+    return data.data || [];
   } catch (error) {
     console.error('Error fetching products:', error);
     return [];
@@ -30,7 +30,7 @@ export const fetchProducts = async (categoryId = null) => {
 
 export const fetchProductById = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/products/${id}`);
+    const response = await fetch(`${API_URL}/products/${id}?populate=category`);
     const data = await response.json();
     return data.data;
   } catch (error) {
