@@ -3,53 +3,107 @@
   background: #f5f7fa;
 }
 
-.dashboard-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 30px 20px;
-}
-
-.dashboard-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 16px;
-  padding: 40px;
-  color: white;
-  margin-bottom: 30px;
+/* Top Bar - Replaces Navbar */
+.dashboard-top-bar {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.header-content h1 {
-  font-size: 32px;
-  margin: 0 0 8px 0;
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.header-content p {
-  font-size: 16px;
-  opacity: 0.9;
+.dashboard-logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2c3e50;
   margin: 0;
 }
 
-.logout-btn-dashboard {
+.dashboard-subtitle {
+  font-size: 14px;
+  color: #666;
+  padding-left: 16px;
+  border-left: 2px solid #e0e0e0;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-website {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid white;
+  padding: 10px 20px;
+  background: #f5f7fa;
+  color: #667eea;
+  border: 2px solid #667eea;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.logout-btn-dashboard:hover {
-  background: white;
+.btn-website:hover {
+  background: #667eea;
+  color: white;
+}
+
+.user-info-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-info-top svg {
   color: #667eea;
+}
+
+.btn-logout-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #ff6b35;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout-top:hover {
+  background: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 20px;
 }
 
 .dashboard-content {
@@ -65,6 +119,8 @@
   padding: 20px;
   height: fit-content;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 100px;
 }
 
 .sidebar-nav {
@@ -441,6 +497,7 @@
   }
 
   .dashboard-sidebar {
+    position: static;
     order: 2;
   }
 
@@ -459,14 +516,26 @@
 }
 
 @media (max-width: 768px) {
-  .dashboard-header {
+  .dashboard-top-bar {
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
+    padding: 16px 20px;
+  }
+
+  .top-bar-left {
+    flex-direction: column;
+    gap: 8px;
     text-align: center;
   }
 
-  .header-content h1 {
-    font-size: 24px;
+  .dashboard-subtitle {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .top-bar-right {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .wishlist-grid {

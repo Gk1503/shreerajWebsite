@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserDashboard.css';
-import Navbar from '../components/Navbar';
 import { fetchProductById } from '../services/api';
+import { getImageUrl } from '../config';
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState('wishlist');
@@ -69,8 +69,6 @@ const UserDashboard = () => {
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
-    // Here you would call the API to update profile
-    // For now, just update localStorage
     const updatedUser = { ...userInfo, ...profileData };
     localStorage.setItem('userInfo', JSON.stringify(updatedUser));
     setUserInfo(updatedUser);
@@ -84,10 +82,13 @@ const UserDashboard = () => {
     navigate('/');
   };
 
+  const goToWebsite = () => {
+    navigate('/');
+  };
+
   if (loading && activeTab === 'wishlist') {
     return (
       <div className="user-dashboard-page">
-        <Navbar />
         <div className="dashboard-container">
           <div className="loading">Loading...</div>
         </div>
@@ -97,15 +98,31 @@ const UserDashboard = () => {
 
   return (
     <div className="user-dashboard-page">
-      <Navbar />
-      
-      <div className="dashboard-container">
-        <div className="dashboard-header">
-          <div className="header-content">
-            <h1>Welcome, {userInfo?.username}!</h1>
-            <p>Manage your wishlist, quotations, and profile</p>
+      {/* Dashboard Header - No Navbar */}
+      <div className="dashboard-top-bar">
+        <div className="top-bar-left">
+          <h2 className="dashboard-logo">SHREERAJ CORPORATION</h2>
+          <span className="dashboard-subtitle">User Dashboard</span>
+        </div>
+        
+        <div className="top-bar-right">
+          <button className="btn-website" onClick={goToWebsite}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Back to Website
+          </button>
+          
+          <div className="user-info-top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>{userInfo?.username}</span>
           </div>
-          <button className="logout-btn-dashboard" onClick={handleLogout}>
+          
+          <button className="btn-logout-top" onClick={handleLogout}>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
@@ -114,7 +131,9 @@ const UserDashboard = () => {
             Logout
           </button>
         </div>
+      </div>
 
+      <div className="dashboard-container">
         <div className="dashboard-content">
           {/* Sidebar */}
           <div className="dashboard-sidebar">
@@ -195,9 +214,7 @@ const UserDashboard = () => {
                       const imageUrl = imagesData.length > 0
                         ? (imagesData[0].attributes?.url || imagesData[0].url)
                         : null;
-                      const fullImageUrl = imageUrl
-                        ? (imageUrl.startsWith('http') ? imageUrl : `http://localhost:5000${imageUrl}`)
-                        : 'https://via.placeholder.com/200';
+                      const fullImageUrl = getImageUrl(imageUrl) || 'https://via.placeholder.com/200';
 
                       return (
                         <div key={item.id} className="wishlist-card">
