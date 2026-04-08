@@ -28,7 +28,7 @@ const BulkUploadProducts = ({ onComplete }) => {
       console.error('Error loading categories:', error);
       setCategories([]);
     }
-  };
+  }
 
   const handleFileSelect = (e) => {
     const files = Array.from(e.target.files);

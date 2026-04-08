@@ -331,51 +331,63 @@ const UserDashboard = () => {
       return;
     }
     
-    // Orange vertical accent bar
-    doc.setFillColor(255, 107, 53);
-    doc.rect(8, 8, 4, 24, 'F');
+    const quotationNo = `SC/${Date.now().toString().slice(-6)}/25-26`;
+    const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
     
-    // Left side - Company Details
-    doc.setFontSize(11);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(255, 140, 0);
-    doc.text('Weaving, Processing & Engineering Spares Suppliers', 16, 13);
+    // Function to draw header on each page
+    const drawHeader = (pageNumber) => {
+      // Orange vertical accent bar
+      doc.setFillColor(255, 107, 53);
+      doc.rect(8, 8, 4, 24, 'F');
+      
+      // Left side - Company Details
+      doc.setFontSize(11);
+      doc.setFont(undefined, 'bold');
+      doc.setTextColor(255, 140, 0);
+      doc.text('Weaving, Processing & Engineering Spares Suppliers', 16, 13);
+      
+      doc.setFontSize(9);
+      doc.setFont(undefined, 'bold');
+      doc.setTextColor(50, 50, 80);
+      doc.text("Gr.Floor, 'NIKUMBH' Complex, Opp. Tomato's Restaurant,", 16, 17.5);
+      doc.text('Besides Goldleaf, Off C.G.Road, Ahmedabad-06.', 16, 21);
+      doc.text('Tele    : +91 79 2640 9933', 16, 24.5);
+      doc.text('Cell    : +91 99137 99333', 16, 28);
+      
+      doc.setTextColor(30, 30, 70);
+      doc.text('E-mail : sales@shreerajcorporation.com', 16, 31.5);
+      
+      // Right side - Logo and Company Name
+      const logoImg = new Image();
+      logoImg.src = companyLogo;
+      doc.addImage(logoImg, 'PNG', 152, 8, 20, 20);
+      
+      doc.setFontSize(15);
+      doc.setFont(undefined, 'bold');
+      doc.setTextColor(0, 128, 96);
+      doc.text('SHREERAJ CORPORATION', 130, 31);
+      
+      // Horizontal line
+      doc.setDrawColor(200, 200, 200);
+      doc.setLineWidth(0.5);
+      doc.line(8, 35, 205, 35);
+      
+      // Page number on subsequent pages
+      if (pageNumber > 1) {
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Page ${pageNumber}`, 105, 40, { align: 'center' });
+      }
+    };
     
-    doc.setFontSize(9);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(50, 50, 80);
-    doc.text("Gr.Floor, 'NIKUMBH' Complex, Opp. Tomato's Restaurant,", 16, 17.5);
-    doc.text('Besides Goldleaf, Off C.G.Road, Ahmedabad-06.', 16, 21);
-    doc.text('Tele    : +91 79 2640 9933', 16, 24.5);
-    doc.text('Cell    : +91 99137 99333', 16, 28);
+    // Draw initial header
+    drawHeader(1);
     
-    doc.setTextColor(30, 30, 70);
-    doc.text('E-mail : sales@shreerajcorporation.com', 16, 31.5);
-    
-    // Right side - Logo and Company Name
-    const logoImg = new Image();
-    logoImg.src = companyLogo;
-    doc.addImage(logoImg, 'PNG', 152, 8, 20, 20);
-    
-    doc.setFontSize(15);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(0, 128, 96);
-    doc.text('SHREERAJ CORPORATION', 130, 31);
-    
-    // Horizontal line
-    doc.setDrawColor(200, 200, 200);
-    doc.setLineWidth(0.5);
-    doc.line(8, 35, 205, 35);
-    
-    // QUOTATION Title
+    // QUOTATION Title (only on first page)
     doc.setFontSize(16);
     doc.setFont(undefined, 'bold');
     doc.setTextColor(0, 0, 0);
     doc.text('QUOTATION', 105, 42, { align: 'center' });
-    
-    // Quotation Details
-    const quotationNo = `SC/${Date.now().toString().slice(-6)}/25-26`;
-    const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
     
     // Left side - Client Details
     doc.setFontSize(11);
@@ -512,13 +524,13 @@ const UserDashboard = () => {
       1: { cellWidth: 25, halign: 'center' },
       2: { cellWidth: 95, halign: 'left' },
       3: { cellWidth: 15, halign: 'center' },
-      4: { cellWidth: 30, halign: 'right' },
+      4: { cellWidth: 30, halign: 'center' },
       5: { cellWidth: 15, halign: 'center' }
     } : {
       0: { cellWidth: 15, halign: 'center' },
       1: { cellWidth: 120, halign: 'left' },
       2: { cellWidth: 15, halign: 'center' },
-      3: { cellWidth: 30, halign: 'right' },
+      3: { cellWidth: 30, halign: 'center' },
       4: { cellWidth: 15, halign: 'center' }
     };
     
@@ -534,11 +546,14 @@ const UserDashboard = () => {
     
     autoTable(doc, {
       startY: 88,
-      margin: { left: 10, right: 10 },
+      margin: { left: 10, right: 10, top: 45, bottom: 40 },
       tableWidth: 195,
       head: tableHeaders,
       body: tableDataWithImages,
       theme: 'grid',
+      showHead: 'everyPage',
+      pageBreak: 'auto',
+      rowPageBreak: 'avoid',
       headStyles: { 
         fillColor: [255, 255, 255],
         textColor: [0, 0, 0],
@@ -624,9 +639,9 @@ const UserDashboard = () => {
               const amount = cellText;
               const fullText = `${rupeeSymbol} ${amount}`;
               
-              // Calculate position for right alignment
+              // Calculate position for center alignment
               const textWidth = doc.getTextWidth(fullText);
-              const xPos = data.cell.x + data.cell.width - textWidth - 3;
+              const xPos = data.cell.x + (data.cell.width - textWidth) / 2;
               const yPos = data.cell.y + data.cell.height / 2 + 3;
               
               doc.text(fullText, xPos, yPos);
@@ -635,8 +650,25 @@ const UserDashboard = () => {
             console.error('Error drawing rupee symbol:', error);
           }
         }
+      },
+      didDrawPage: (data) => {
+        // Draw header on every page except the first
+        if (data.pageNumber > 1) {
+          drawHeader(data.pageNumber);
+        }
       }
     });
+    
+    // Check if we're on the last page and have space for footer
+    const finalY = doc.lastAutoTable.finalY;
+    const pageHeight = doc.internal.pageSize.height;
+    const footerHeight = 50; // Approximate height needed for footer
+    
+    // If not enough space on current page, add new page
+    if (finalY + footerHeight > pageHeight - 20) {
+      doc.addPage();
+      drawHeader(doc.internal.getNumberOfPages());
+    }
     
     // Footer sections
     let footerY = doc.lastAutoTable.finalY + 3;
@@ -647,7 +679,7 @@ const UserDashboard = () => {
     
     doc.rect(10, footerY, 50, 9);
     doc.setFont(undefined, 'bold');
-    doc.setFontSize(10);
+    doc.setFontSize(9);
     doc.setTextColor(0, 0, 0);
     doc.text('GST  :', 11, footerY + 6);
     doc.setFont(undefined, 'normal');
@@ -655,6 +687,7 @@ const UserDashboard = () => {
     
     doc.rect(60, footerY, 95, 9);
     doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
     doc.text('Packing/Forwarding:', 61, footerY + 6);
     doc.setFont(undefined, 'normal');
     doc.text('ex works', 95, footerY + 6);
@@ -667,6 +700,7 @@ const UserDashboard = () => {
     
     doc.rect(10, footerY, 50, 9);
     doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
     doc.text('Delivery  :', 11, footerY + 6);
     doc.setFont(undefined, 'normal');
     doc.text('7-15 days', 31, footerY + 6);
@@ -675,16 +709,19 @@ const UserDashboard = () => {
     
     doc.rect(155, footerY, 30, 9);
     doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
     doc.text('Payment:', 156, footerY + 6);
     
     doc.rect(185, footerY, 20, 9);
     doc.setFont(undefined, 'normal');
+    doc.setFontSize(9);
     doc.text('30 Days', 186, footerY + 6);
     
     footerY += 9;
     
     doc.rect(10, footerY, 195, 9);
     doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
     doc.text('Remarks  :', 11, footerY + 6);
     
     footerY += 9;
@@ -693,7 +730,7 @@ const UserDashboard = () => {
     doc.rect(155, footerY, 50, 22);
     
     doc.setFont(undefined, 'normal');
-    doc.setFontSize(9.5);
+    doc.setFontSize(8.5);
     doc.setTextColor(0, 0, 0);
     doc.text('N. B.: All quotations are subject to Market Fluctuations and Prior sale.', 11, footerY + 5);
     doc.text('Subject to Ahmedabad Jurisdiction.', 11, footerY + 10);
@@ -701,18 +738,27 @@ const UserDashboard = () => {
     doc.text('Validity 30 Days.', 75, footerY + 10);
     
     doc.setTextColor(255, 69, 0);
-    doc.setFontSize(10.5);
+    doc.setFontSize(9);
     doc.text('Shreeraj Corporation GST NO. 24AEAPS1043P1ZF', 11, footerY + 16);
     
     doc.setTextColor(0, 0, 0);
     doc.setFont(undefined, 'bold');
-    doc.setFontSize(10);
+    doc.setFontSize(9);
     doc.text('For SHREERAJ CORPORATION', 156, footerY + 5);
     
     if (quotationData.includeSignature) {
       doc.setFont(undefined, 'normal');
-      doc.setFontSize(11);
+      doc.setFontSize(10);
       doc.text('Vishal Shah', 165, footerY + 17);
+    }
+    
+    // Add page numbers to all pages
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 100);
+      doc.text(`Page ${i} of ${totalPages}`, 105, doc.internal.pageSize.height - 10, { align: 'center' });
     }
     
     const fileName = `Quotation_SC_${Date.now().toString().slice(-6)}.pdf`;
