@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCategories } from '../../services/api';
 import { API_URL } from '../../config';
 import './Manager.css';
 

@@ -99,6 +99,7 @@ const WishlistPage = () => {
       .replace(/"/g, '"')  // Smart quote
       .replace(/"/g, '"')  // Smart quote
       .replace(/…/g, '...')  // Ellipsis
+      // eslint-disable-next-line no-control-regex
       .replace(/[^\x00-\x7F]/g, ''); // Remove any other non-ASCII characters
   };
 
@@ -233,7 +234,6 @@ const WishlistPage = () => {
     
     // Products Table with Images
     const tableData = [];
-    let subtotal = 0;
     
     // Load product images if includeImages is true
     const productImages = {};
@@ -271,8 +271,6 @@ const WishlistPage = () => {
     itemsToQuote.forEach((item, index) => {
       const attrs = item.product.attributes || item.product;
       const price = parseFloat(productPrices[item.id] || 0);
-      const amount = price * item.quantity;
-      subtotal += amount;
       
       // Clean product name for PDF
       const cleanName = cleanTextForPDF(attrs.name);
